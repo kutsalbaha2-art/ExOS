@@ -18,9 +18,9 @@ elif command -v pacman &> /dev/null; then
     sudo pacman -Sy --noconfirm calamares git python3 2>/dev/null
 fi
 
-# 3. GITHUB DEPOSUNDAN EXOS DOSYALARINI ÇEKME
+# 3. GITHUB DEPOSUNDAN EXOS DOSYALARINI ÇEKME (ExOs Düzeltildi)
 echo "📥 ExOs Calamares Modülleri GitHub'dan İndiriliyor..."
-git clone https://github.com/kutsalbaha2-art/SpeedyOS-.git .
+git clone https://github.com/kutsalbaha2-art/ExOs.git .
 
 # 4. CALAMARES'İ EXOS YAPILANDIRMASIYLA BAŞLATMA
 echo "🚀 ExOs Kurulum Sihirbazı Başlatılıyor..."
