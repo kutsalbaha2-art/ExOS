@@ -1,0 +1,25 @@
+name: ExOs ISO Builder
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-iso:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Repoyu Klonla
+        uses: actions/checkout@v4
+
+      - name: Izole Fedora 41 Konteynerinde ISO Derleme
+        run: |
+          sudo docker run --privileged -v ${{ github.workspace }}:/build fedora:41 bash -c "
+            dnf install -y lorax livecd-tools &&
+            cd /build &&
+            livemedia-creator --make-iso --ks=exos-rhel.cfg --no-virt --iso-only --iso-name=ExOs-Beta1.iso --releasever=41
+          "
+
+      - name: Derlenen ISO Dosyasını İndirmeye Hazırla
+        uses: actions/upload-artifact@v4
+        with:
+          name: ExOs-Beta1-ISO
+          path: ExOs-Beta1.iso
