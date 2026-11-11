@@ -1,0 +1,5 @@
+---
+type:       "job"
+name:       "exos_hardware"
+interface:  "python"
+script:     "main.py"
