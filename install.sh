@@ -1,30 +1,32 @@
 #!/bin/bash
 # =====================================================================
-# ExOs Online Installer Launcher (Fix Abort Crash)
+# ExOs Online Installer Fix Launcher (install.sh)
 # =====================================================================
 
 echo "⚡ ExOs Kurulum Ortamı Hazırlanıyor..."
 
-# 1. GRAFİK EKRAN (X11) YETKİLERİNİ ROOT KULLANICISINA AÇMA
+# 1. GRAFİK EKRAN (X11/Qt) YETKİSİNİ ROOT KULLANICISINA TANIMLAMA
 xhost +local:root > /dev/null 2>&1
 
-# 2. GEÇİCİ ÇALIŞMA DİZİNİ OLUŞTURMA
+# 2. ÇALIŞMA DİZİNİNİ SIFIRLAMA VE GITHUB DEPOSUNU ÇEKME
 EXOS_DIR="/tmp/exos-installer"
 sudo rm -rf $EXOS_DIR
 mkdir -p $EXOS_DIR
 cd $EXOS_DIR
 
-# 3. GEREKLİ PAKET KONTROLÜ VE YÜKLEME
-if command -v dnf &> /dev/null; then
-    sudo dnf install -y calamares git python3 2>/dev/null
-elif command -v pacman &> /dev/null; then
-    sudo pacman -Sy --noconfirm calamares git python3 2>/dev/null
-fi
-
-# 4. GITHUB DEPOSUNU ÇEKME
-echo "📥 ExOs Calamares Modülleri İndiriliyor..."
+echo "📥 ExOs Dosyaları GitHub'dan Çekiliyor..."
 git clone https://github.com/kutsalbaha2-art/ExOs.git .
 
-# 5. CALAMARES'İ EKRAN YETKİLERİNİ KORUYARAK (-E) BAŞLATMA
-echo "🚀 ExOs Kurulum Sihirbazı Başlatılıyor..."
-sudo -E calamares -c $EXOS_DIR/calamares/settings.conf -d
+# 3. TEMA VE MODÜLLERİ CALAMARES RESMİ SİSTEM DİZİNLERİNE KOPYALAMA
+sudo mkdir -p /usr/share/calamares/branding/
+sudo mkdir -p /usr/lib64/calamares/modules/
+sudo mkdir -p /usr/lib/calamares/modules/
+
+# ExOs Tema ve Donanım Modülünü Sistem Yollarına Entegre Etme
+sudo cp -rf $EXOS_DIR/branding/exos /usr/share/calamares/branding/
+sudo cp -rf $EXOS_DIR/src/modules/exos_hardware /usr/lib64/calamares/modules/ 2>/dev/null
+sudo cp -rf $EXOS_DIR/src/modules/exos_hardware /usr/lib/calamares/modules/ 2>/dev/null
+
+# 4. CALAMARES'İ QT GRAPHICS VE EKRAN YETKİLERİYLE BAŞLATMA
+echo "🚀 ExOs Kurulum Sihirbazı Çalıştırılıyor..."
+sudo -E QT_QPA_PLATFORM=xcb calamares -c $EXOS_DIR/calamares/settings.conf -d
