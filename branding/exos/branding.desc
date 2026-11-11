@@ -1,0 +1,19 @@
+---
+componentName:  exos
+
+welcomeStyleCalamares: true
+welcomeExpanding: true
+
+strings:
+    productName:         "ExOs"
+    version:             "Beta 1"
+    shortVersion:        "Beta 1"
+    versionedName:       "ExOs Beta 1"
+    shortVersionedName:  "ExOs Beta 1"
+    sidebar:             "ExOs Kurulum Sihirbazı"
+    navigationUrl:       "https://github.com/kutsalbaha2-art/ExOs"
+
+style:
+    SidebarBackground:    "#121212"
+    SidebarText:          "#FFFFFF"
+    SidebarTextSelect:    "#FF3333"
